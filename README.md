@@ -2,7 +2,7 @@
 
 This is some basic code for performing regression on protein structure data using a SchNet-like model architecure. SchNet is a graph neural network model that can be used for learning properties of molecules or protein structures. The goal of this code is to predict a continuous value (property) associated with a given protein structure.
 
- The SchNet Paper - [Here](https://arxiv.org/pdf/1706.08566v5.pdf)
+ This experiment is inspired by the SchNet Paper - [Here](https://arxiv.org/pdf/1706.08566v5.pdf)
 
 ## **Code Overview**
 The code is written in Python and uses the following libraries:
