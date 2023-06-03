@@ -19,7 +19,7 @@ The code is written in Python and uses the following libraries:
 
 - **Data Loading**: The protein structure data is loaded from PDB files and organized into a dictionary. Each entry in the dictionary contains the protein structure's key (filename) and the associated label (property value).
 
-- **Data Preparation**: The protein structure data is preprocessed to create a PyTorch Geometric Data object. This includes computing the distance matrix, creating an adjacency matrix based on a distance threshold (in this case 20), and converting the data to PyTorch tensors.
+- **Data Preparation**: The protein structure data is preprocessed to create a PyTorch Geometric Data object. This includes computing the distance matrix, creating an adjacency matrix based on a distance threshold (in this case 20 A), and converting the data to PyTorch tensors.
 
 - **Data Loading and Batching**: The data is split into train and test sets, and then converted into PyTorch Geometric DataLoader objects for efficient batching during training.
 
@@ -33,17 +33,15 @@ The code is written in Python and uses the following libraries:
 
 ## **SchNet**
 
-SchNet is a graph neural network (GNN) architecture specifically designed for learning properties of molecules or protein structures. It operates on a graph representation of the input data, where nodes represent atoms and edges represent bonds or interactions between atoms. The SchNet model incorporates the following components:
+The SchNet-like model incorporates the following components:
 
-- **SchNetConv Layer**: This is the main building block of the SchNet model. It performs message passing and updates node representations based on the neighboring nodes' features. The SchNetConv layer consists of a multilayer perceptron (MLP) that processes node features and outputs new node representations. The MLP has two linear layers and a non-linear activation function (ReLU). The SchNetConv layer is useful because it allows the model to capture local interactions and learn informative node representations based on the neighborhood structure.
+- **SchNetConv Layer**: This layer performs message passing and updates node representations based on the neighboring nodes' features. The SchNetConv layer consists of a multilayer perceptron (MLP) that processes node features and outputs new node representations. The MLP has two linear layers and a non-linear activation function (ReLU). The SchNetConv layer is useful because it allows the model to capture local interactions and learnn rich node representations based on the neighborhood.
 
 - **Fully Connected Layers**: After the SchNetConv layers, the node representations are passed through fully connected layers. These layers further process the learned node representations and capture global information about the graph structure. The fully connected layers are useful for capturing higher-order dependencies and integrating information from the entire graph.
 
 - **Output Layer**: The final fully connected layer in the SchNet model is responsible for producing the output predictions. It maps the learned node representations to the desired output dimension (in this case, a single continuous value). The output layer is useful for transforming the learned features into a format suitable for the regression task.
 
 - **Graph Pooling**: In the SchNet model, global mean pooling is applied to aggregate the node representations into a fixed-size representation. This pooling operation computes the mean of the node features across the graph, resulting in a single feature vector that summarizes the entire graph. Global mean pooling is useful for obtaining a graph-level representation that can be used for making predictions at the whole graph level.
-
-The SchNet model is designed to capture both local and global interactions in the input graph. The SchNetConv layers allow the model to propagate information between neighboring atoms, capturing local chemical and structural features. The fully connected layers enable the model to integrate information from the entire graph and learn complex patterns and dependencies. The output layer maps the learned features to the desired output dimension, enabling regression on the protein structure data. Lastly, the global mean pooling operation summarizes the graph-level information for prediction.
 
 ## **Reason for using MSE Loss**
 
@@ -55,9 +53,9 @@ The SchNet model is designed to capture both local and global interactions in th
 
 - **Input Features**: The input features in this architecture are the locations of the atoms in the protein structure. These 3D coordinates provide spatial information about the protein's constituent atoms, which is crucial for understanding its structure and properties.
 
-- **SchNetConv Layers**: The SchNetConv layers play a central role in the model architecture. They enable message passing and update the node representations (atom features) based on the features of their neighboring atoms. By applying a multilayer perceptron (MLP) to the atom features, the SchNetConv layers capture local interactions and extract important information from the neighborhood structure.
+- **SchNetConv Layers**: These layers enable message passing and update the node representations (atom features) based on the features of their neighboring atoms. By applying a multilayer perceptron (MLP) to the atom features, the SchNetConv layers capture local interactions and extract important information from the neighborhood structure.
 
-- **New Representations**: The SchNetConv layers create new representations for the atoms in the protein structure. These representations encode learned information about the atoms and their local environments, capturing important structural and chemical features. By iteratively updating the representations through message passing, the model can effectively incorporate and propagate information from neighboring atoms, which is crucial for understanding the protein's properties.
+- **New Representations**: The SchNetConv layers create new representations for the atoms in the protein structure. These representations encode learned information about the atoms and their respective neighborhoods, capturing important structural and chemical features. By iteratively updating the representations through message passing, the model can effectively incorporate and propagate information from neighboring atoms, which is crucial for understanding the protein's properties.
 
 - **Fully Connected Layers**: The fully connected layers follow the SchNetConv layers and further process the learned node representations. These layers capture global information and higher-order dependencies across the graph. By performing additional transformations and non-linear operations, the fully connected layers enable the model to extract complex patterns and relationships from the learned representations.
 
